@@ -9,7 +9,12 @@ import (
 	"periph.io/x/host/v3"
 )
 
-func Device() {
+// type Device struct {
+// 	Name string
+// 	dev  *i2c.Bus
+// }
+
+func Device_01() {
 
 	// Inicializacion de drive de host
 	if _, err := host.Init(); err != nil {
@@ -24,17 +29,14 @@ func Device() {
 	defer bus.Close()
 
 	d := &i2c.Dev{Addr: 0x1E, Bus: bus}
-	read := make([]byte, 1)
 
-	// escritura
-	if _, err := d.Write([]byte{CNTL1.Addr, 0x02}); err != nil {
+	if err := CNTL1.Write(d, 0x82); err != nil {
 		log.Fatalf("No se envia el mensaje Tx: %v", err)
 	}
 
-	// lectura
-	if err := d.Tx([]byte{CNTL1.Addr}, read); err != nil {
+	if read, err := CNTL1.Read(d); err != nil {
 		log.Fatalf("No se envia el mensaje Write : %v", err)
+	} else {
+		fmt.Printf("t %2X\n", read)
 	}
-	fmt.Printf("%2X\n", read)
-
 }
