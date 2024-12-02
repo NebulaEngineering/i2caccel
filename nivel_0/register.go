@@ -12,7 +12,7 @@ type Register struct {
 }
 
 func (r *Register) Write(d *i2c.Dev, n byte) error {
-	if _, err := d.Write([]byte{CNTL1.Addr, n}); err != nil {
+	if _, err := d.Write([]byte{r.Addr, n}); err != nil {
 		return err
 	}
 	return nil
@@ -20,7 +20,7 @@ func (r *Register) Write(d *i2c.Dev, n byte) error {
 
 func (r *Register) Read(d *i2c.Dev) ([]byte, error) {
 	read := make([]byte, 1)
-	if err := d.Tx([]byte{CNTL1.Addr}, read); err != nil {
+	if err := d.Tx([]byte{r.Addr}, read); err != nil {
 		return nil, err
 	}
 	return read, nil
