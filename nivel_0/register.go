@@ -1,27 +1,19 @@
-package accelemeter
-
-import (
-	"periph.io/x/conn/v3/i2c"
-)
+package nivel0
 
 type Register struct {
 	Name   string
 	Addr   byte
 	Value  byte
+	Device *device
 	Update bool
 }
 
-func (r *Register) Write(d *i2c.Dev, n byte) error {
-	if _, err := d.Write([]byte{r.Addr, n}); err != nil {
-		return err
-	}
-	return nil
+func (r *Register) Write_Error(value []byte) {
+	data := []byte{r.Addr}
+	data = append(data, value...)
+	r.Device.Write_Error(data)
 }
 
-func (r *Register) Read(d *i2c.Dev) ([]byte, error) {
-	read := make([]byte, 1)
-	if err := d.Tx([]byte{r.Addr}, read); err != nil {
-		return nil, err
-	}
-	return read, nil
+func (r *Register) Read_Error() []byte {
+	return r.Device.Read_Error([]byte{r.Addr})
 }
