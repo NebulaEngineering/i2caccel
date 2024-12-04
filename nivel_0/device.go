@@ -18,6 +18,7 @@ type device struct {
 	mux   sync.Mutex
 }
 
+// Inicializar periperico y controladores I2C
 func (d *device) Init() {
 	// Inicializacion de drive de host
 	if _, err := host.Init(); err != nil {
@@ -36,6 +37,9 @@ func (d *device) Init() {
 func (d *device) Close() error {
 	return d.iobus.Close()
 }
+
+// Escritura I2C
+// Escritura sin manejo de error
 func (d *device) Write(w []byte) error {
 	d.mux.Lock()
 	defer d.mux.Unlock()
@@ -51,6 +55,8 @@ func (d *device) Write_Error(w []byte) {
 	}
 }
 
+// Lectura I2C
+// Lectura sin manejo de error
 func (d *device) Read(w []byte) ([]byte, error) {
 	d.mux.Lock()
 	defer d.mux.Unlock()
@@ -61,6 +67,7 @@ func (d *device) Read(w []byte) ([]byte, error) {
 	return read, nil
 }
 
+// Lectura con manejo estandar del  error
 func (d *device) Read_Error(w []byte) []byte {
 	if read, err := d.Read(w); err != nil {
 		log.Fatalf("Error lectura del registro 0x%2X, Error: %v", w, err)
