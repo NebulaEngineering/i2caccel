@@ -17,10 +17,10 @@ func (C *Control) Interpretar() {
 	var Value byte
 	if C.Registro.Update {
 		Value = (C.Registro.Value & C.Posicion)
-		fmt.Printf("la propiedad *%v, es %v\n", C.Name, C.Mapping[Value])
+		fmt.Printf("*%v:%v", C.Name, C.Mapping[Value])
 	} else {
 		Value = (C.Registro.Read_Error()[0] & C.Posicion)
-		fmt.Printf("la propiedad %v, es %v\n", C.Name, C.Mapping[Value])
+		fmt.Printf(" %v:%v", C.Name, C.Mapping[Value])
 	}
 }
 
