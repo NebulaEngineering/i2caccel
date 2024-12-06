@@ -1,4 +1,4 @@
-package nivel1
+package control
 
 func Booleano(num byte) map[byte]any {
 	return map[byte]any{num: 1, 0x00: 0}

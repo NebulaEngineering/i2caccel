@@ -1,13 +1,13 @@
-package nivel1
+package control
 
 import (
-	n0 "cli_acc/main/nivel_0"
+	r "cli_acc/main/register"
 	"fmt"
 )
 
 type Control struct {
 	Name     string
-	Registro *n0.Register
+	Registro *r.Register
 	Posicion byte
 	Mapping  map[byte]any
 	A        any
