@@ -1,15 +1,14 @@
+// El paquete register define la estructura Register para interactuar con los registros del acelerómetro
+// LT8640A, proporcionando métodos para leer y escribir valores, y forma parte de una CLI para configurar
+// y leer datos del dispositivo.
 package register
 
 import (
 	D "cli_acc/main/device" // Importa el paquete "device" para interactuar con el dispositivo I2C.
 )
 
-// Register representa un registro de un dispositivo I2C, específicamente del
-// acelerómetro LT8640A.  Proporciona métodos para leer y escribir datos en
-// los registros del dispositivo.  Cada registro se identifica por su nombre y
-// dirección. Este paquete forma parte de una CLI para interactuar con el
-// acelerómetro LT8640A, permitiendo leer y configurar sus diferentes
-// parámetros.
+// Register representa un registro de un dispositivo I2C, que facilita
+// la interaccion con un registro definido
 type Register struct {
 	name   string    // Nombre del registro (ej: "XHP_L", "CNTL1").
 	addr   byte      // Dirección del registro en el dispositivo I2C.
