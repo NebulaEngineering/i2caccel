@@ -1,23 +1,27 @@
 package control
 
-func Booleano(num byte) map[byte]any {
-	return map[byte]any{num: 1, 0x00: 0}
+// Booleano genera un mapa para valores booleanos, donde la clave 'hex' representa el bit
+// activado y 0x00 el bit desactivado, simplificando la interpretación de registros
+// con valores booleanos.
+func Booleano(hex byte) map[byte]any {
+	return map[byte]any{hex: 1, 0x00: 0}
 }
 
-// GESEL
+// Constantes que representan los diferentes rangos de sensibilidad del acelerómetro.
 const (
 	Gsel_sens_2g byte = 0x00
 	Gsel_sens_4g byte = 0x08
 	Gsel_sens_8g byte = 0x10
 )
 
+// GSEL_C mapea los valores de los registros a los rangos de sensibilidad en g.
 var GSEL_C = map[byte]any{
 	Gsel_sens_2g: 2,
 	Gsel_sens_4g: 4,
 	Gsel_sens_8g: 8,
 }
 
-// OWUF
+// Constantes que representan las diferentes frecuencias de Motion Detect.
 const (
 	OWUF_0_781HZ byte = 0x00
 	OWUF_1_563HZ byte = 0x01
@@ -29,6 +33,7 @@ const (
 	OWUF_100HZ   byte = 0x07
 )
 
+// Mapea los valores de los registros a las frecuencias de Motion Detect.
 var OWUF_C = map[byte]any{
 	OWUF_0_781HZ: 0.781,
 	OWUF_1_563HZ: 1.563,
@@ -40,7 +45,8 @@ var OWUF_C = map[byte]any{
 	OWUF_100HZ:   100,
 }
 
-// OSA
+// Constantes que representan las diferentes tasas de muestreo de salida.
+// Define las constantes para las diferentes tasas de muestreo de salida (Output Sample Rate) del acelerómetro.
 const (
 	OSA_12_5HZ  byte = 0x00
 	OSA_25HZ    byte = 0x01
@@ -56,6 +62,7 @@ const (
 	OSA_6_25HZ  byte = 0x0B
 )
 
+// Mapea los valores de los registros a las tasas de muestreo de salida.
 var OSA_C = map[byte]any{
 	OSA_12_5HZ:  12.5,
 	OSA_25HZ:    25,
@@ -71,8 +78,7 @@ var OSA_C = map[byte]any{
 	OSA_6_25HZ:  6.25,
 }
 
-// AVC
-
+// Constantes que representan el control de muestras promediado.
 const (
 	AVC_0_samples   = 0x00
 	AVC_2_samples   = 0x10
@@ -84,6 +90,7 @@ const (
 	AVC_128_samples = 0x70
 )
 
+// Mapea los valores de los registros para el control de muestras promediado.
 var AVC_C = map[byte]any{
 	AVC_0_samples:   0,
 	AVC_2_samples:   2,
@@ -95,7 +102,7 @@ var AVC_C = map[byte]any{
 	AVC_128_samples: 128,
 }
 
-// BUF_M_C
+// Constantes que representan los diferentes modo de operacion del buffer.
 const (
 	BUF_M_FIFO = iota
 	BUF_M_Stream
@@ -103,10 +110,10 @@ const (
 	BUF_M_FILO
 )
 
+// BUF_M_C mapea los modo de operacion del buffer.
 var BUF_M_C = map[byte]any{
-
-	BUF_M_FIFO:    0x00,
-	BUF_M_Stream:  0x01,
-	BUF_M_Trigger: 0x02,
-	BUF_M_FILO:    0x03,
+	BUF_M_FIFO:    "FIFO",
+	BUF_M_Stream:  "Stream",
+	BUF_M_Trigger: "Trigger",
+	BUF_M_FILO:    "FILO",
 }

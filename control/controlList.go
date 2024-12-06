@@ -7,7 +7,7 @@ import (
 var PC1 = Control{Name: "PC1", Registro: &r.CNTL1, Posicion: 0x80, Mapping: Booleano(0x80)}
 var RES = Control{Name: "RES", Registro: &r.CNTL1, Posicion: 0x40, Mapping: Booleano(0x40)}
 var DRDYE = Control{Name: "DRDYE", Registro: &r.CNTL1, Posicion: 0x20, Mapping: Booleano(0x20)}
-var GSEL = Control{Name: "GSEL", Registro: &r.CNTL1, Posicion: 0x18, Mapping: GSEL_C}
+var GSEL = Control{Name: "GSEL", Registro: &r.CNTL1, Posicion: 0x18, Mapping: GSEL_C, Str: " G"}
 var TDTE = Control{Name: "TDTE", Registro: &r.CNTL1, Posicion: 0x04, Mapping: Booleano(0x04)}
 var WUFE = Control{Name: "WUFE", Registro: &r.CNTL1, Posicion: 0x02, Mapping: Booleano(0x02)}
 var TPE = Control{Name: "TPE", Registro: &r.CNTL1, Posicion: 0x01, Mapping: Booleano(0x01)}
@@ -23,11 +23,11 @@ var FUM = Control{Name: "FUM", Registro: &r.CNTL2, Posicion: 0x01, Mapping: Bool
 
 var OTP = Control{Name: "OTP", Registro: &r.CNTL3, Posicion: 0xC0}
 var OTDT = Control{Name: "OTDT", Registro: &r.CNTL3, Posicion: 0x38}
-var OWUF = Control{Name: "OWUF", Registro: &r.CNTL3, Posicion: 0x07, Mapping: OWUF_C}
+var OWUF = Control{Name: "OWUF", Registro: &r.CNTL3, Posicion: 0x07, Mapping: OWUF_C, Str: " Hz"}
 
 var IIR_BYPASS = Control{Name: "IIR_BYPASS", Registro: &r.ODCNTL, Posicion: 0x80, Mapping: Booleano(0x80)}
 var LPR0 = Control{Name: "LPR0", Registro: &r.ODCNTL, Posicion: 0x40, Mapping: Booleano(0x40)}
-var OSA = Control{Name: "OSA", Registro: &r.ODCNTL, Posicion: 0x0F, Mapping: OSA_C}
+var OSA = Control{Name: "OSA", Registro: &r.ODCNTL, Posicion: 0x0F, Mapping: OSA_C, Str: " Hz"}
 
 var IEN = Control{Name: "IEN", Registro: &r.INC1, Posicion: 0x20, Mapping: Booleano(0x20)}
 var IEA = Control{Name: "IEA", Registro: &r.INC1, Posicion: 0x10, Mapping: Booleano(0x10)}
@@ -75,7 +75,7 @@ var WUFC = Control{Name: "WUFC", Registro: &r.WUFC, Posicion: 0xFF, Mapping: nil
 
 var ATH = Control{Name: "ATH", Registro: &r.ATH, Posicion: 0xFF, Mapping: nil}
 
-var AVC = Control{Name: "AVC", Registro: &r.LP_CNTL, Posicion: 0x70, Mapping: AVC_C}
+var AVC = Control{Name: "AVC", Registro: &r.LP_CNTL, Posicion: 0x70, Mapping: AVC_C, Str: " Samples"}
 
 var SMP_TH = Control{Name: "SMP_TH", Registro: &r.BUF_CNTL1, Posicion: 0x7F, Mapping: nil}
 

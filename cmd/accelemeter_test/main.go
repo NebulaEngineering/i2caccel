@@ -10,6 +10,7 @@ import (
 func main() {
 
 	d.LT8640A.Init()
+	defer d.LT8640A.Close()
 
 	fmt.Printf("datos de CNTL1: (%02X) ", r.CNTL1.Read_Error())
 	for _, item := range []*c.Control{&c.PC1, &c.RES, &c.DRDYE, &c.GSEL, &c.WUFE, &c.TPE} {

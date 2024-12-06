@@ -1,3 +1,10 @@
+// El paquete control proporciona la lógica para interpretar los valores de los registros del
+// acelerómetro LT8640A, traduciendo los datos binarios en representaciones legibles y significativas
+// para el usuario.
+//
+// Define constantes y mapas que se utilizan para interpretar y configurar los valores de los
+// registros del acelerómetro LT8640A.  Forma parte de una CLI que permite leer y configurar
+// las propiedades del acelerómetro.
 package control
 
 import (
@@ -5,22 +12,26 @@ import (
 	"fmt"
 )
 
+// Control representa un propiedad configurable del acelerómetro LT8640A.
+// Almacena el nombre de la propiedad, el registro asociado, la posición del bit o bits
+// que representan la propiedades dentro del registro, y un mapa para traducir el valor
+// binario a una representación legible.
 type Control struct {
 	Name     string
 	Registro *r.Register
 	Posicion byte
 	Mapping  map[byte]any
-	A        any
+	Str      string
 }
 
 func (C *Control) Interpretar() {
 	var Value byte
 	if C.Registro.Update {
 		Value = (C.Registro.Value & C.Posicion)
-		fmt.Printf("*%v:%v", C.Name, C.Mapping[Value])
+		fmt.Printf("*%v:%v%v", C.Name, C.Mapping[Value], C.Str)
 	} else {
 		Value = (C.Registro.Read_Error()[0] & C.Posicion)
-		fmt.Printf(" %v:%v", C.Name, C.Mapping[Value])
+		fmt.Printf(" %v:%v%v", C.Name, C.Mapping[Value], C.Str)
 	}
 }
 
@@ -28,21 +39,3 @@ func (C *Control) Previo(n byte) {
 	C.Registro.Value = n
 	C.Registro.Update = true
 }
-
-// func NewControl(name string, registro *n0.Register, posicion byte, mapping map[byte]string) Control {
-
-// 	// condicion para Mapping si usa un bit y varios bits
-// 	var mapa map[byte]string
-// 	if list := []byte{0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80}; slices.Index(list, posicion) == -1 {
-// 		mapa = mapping
-// 	} else {
-// 		mapa = map[byte]string{posicion: "activo", 0x00: "inactivo"}
-// 	}
-
-// 	return Control{
-// 		Name:     name,
-// 		Registro: registro,
-// 		Posicion: posicion,
-// 		Mapping:  mapa,
-// 	}
-// }
