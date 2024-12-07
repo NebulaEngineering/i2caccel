@@ -57,8 +57,8 @@ var WUFI1 = Control{Name: "WUFI1", Registro: &r.INC4, Posicion: 0x02, Mapping: B
 var TPI1 = Control{Name: "TPI1", Registro: &r.INC4, Posicion: 0x01, Mapping: Booleano(0x01)}
 
 var IEN2 = Control{Name: "IEN2", Registro: &r.INC5, Posicion: 0x20, Mapping: Booleano(0x20)}
-var IEA2 = Control{Name: "TPI1", Registro: &r.INC5, Posicion: 0x10, Mapping: Booleano(0x10)}
-var IEL2 = Control{Name: "TPI1", Registro: &r.INC5, Posicion: 0x08, Mapping: Booleano(0x08)}
+var IEA2 = Control{Name: "IEA2", Registro: &r.INC5, Posicion: 0x10, Mapping: Booleano(0x10)}
+var IEL2 = Control{Name: "IEL2", Registro: &r.INC5, Posicion: 0x08, Mapping: Booleano(0x08)}
 
 var BFI2 = Control{Name: "BFI2", Registro: &r.INC6, Posicion: 0x40, Mapping: Booleano(0x40)}
 var WMI2 = Control{Name: "WMI2", Registro: &r.INC6, Posicion: 0x20, Mapping: Booleano(0x20)}
@@ -91,3 +91,19 @@ var BUF_TRIG = Control{Name: "BUF_TRIG", Registro: &r.BUF_STATUS_2, Posicion: 0x
 var BUF_CLEAR = Control{Name: "BUF_CLEAR", Registro: &r.BUF_CLEAR, Posicion: 0xFF, Mapping: nil}
 
 var BUF_READ = Control{Name: "BUF_READ", Registro: &r.BUF_READ, Posicion: 0xFF, Mapping: nil}
+
+var Mregister = map[*r.Register][]*Control{
+	&r.CNTL1:     {&PC1, &RES, &DRDYE, &GSEL, &WUFE, &TPE},
+	&r.CNTL3:     {&OWUF},
+	&r.INC1:      {&IEN, &IEA, &IEL, &STPOL, &SPI3E},
+	&r.INC2:      {&XNWUE, &XPWUE, &YNWUE, &YPWUE, &ZNWUE, &ZPWUE},
+	&r.INC3:      {&TLEM, &TRIM, &TDOM, &TUPM, &TFDM, &TFUM},
+	&r.INC4:      {&BFI1, &WMI1, &DRDYI1, &TDTI1, &WUFI1, &TPI1},
+	&r.INC5:      {&IEN2, &IEA2, &IEL2},
+	&r.INC6:      {&BFI2, &WMI2, &DRDYI2, &TDTI2, &WUFI2, &TPI2},
+	&r.WUFC:      {&WUFC},
+	&r.ATH:       {&ATH},
+	&r.LP_CNTL:   {&AVC},
+	&r.BUF_CNTL1: {&SMP_TH},
+	&r.BUF_CNTL2: {&BUFE, &BRES, &BFIE, &BUF_M},
+}

@@ -24,14 +24,14 @@ type Control struct {
 	Str      string
 }
 
-func (C *Control) Interpretar() {
+func (C *Control) String() string {
 	var Value byte
 	if C.Registro.Update {
 		Value = (C.Registro.Value & C.Posicion)
-		fmt.Printf("*%v:%v%v", C.Name, C.Mapping[Value], C.Str)
+		return fmt.Sprintf("*%v:%v%v", C.Name, C.Mapping[Value], C.Str)
 	} else {
 		Value = (C.Registro.Read_Error()[0] & C.Posicion)
-		fmt.Printf(" %v:%v%v", C.Name, C.Mapping[Value], C.Str)
+		return fmt.Sprintf(" %v:%v%v", C.Name, C.Mapping[Value], C.Str)
 	}
 }
 

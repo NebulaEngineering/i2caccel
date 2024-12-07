@@ -10,7 +10,7 @@ import (
 // Register representa un registro de un dispositivo I2C, que facilita
 // la interaccion con un registro definido
 type Register struct {
-	name   string    // Nombre del registro (ej: "XHP_L", "CNTL1").
+	Name   string    // Nombre del registro (ej: "XHP_L", "CNTL1").
 	addr   byte      // Dirección del registro en el dispositivo I2C.
 	Value  byte      // Valor actual del registro, actualizado tras una lectura.
 	device *D.Device // Puntero al dispositivo I2C (LT8640A) al que pertenece el registro.
