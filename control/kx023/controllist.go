@@ -102,39 +102,77 @@ var ZNWUE = c.Control{Name: "ZNWUE", Registro: &r.INC2, Posicion: 0x02, Mapping:
 // Alterna la deteccion de movimiento por el eje +z.
 var ZPWUE = c.Control{Name: "ZPWUE", Registro: &r.INC2, Posicion: 0x01, Mapping: Booleano(0x01)}
 
+// Alterna la deteccion de evento tap/double en la direccion -x
 var TLEM = c.Control{Name: "TLEM", Registro: &r.INC3, Posicion: 0x20, Mapping: Booleano(0x20)}
+
+// Alterna la deteccion de evento tap/double en la direccion +x
 var TRIM = c.Control{Name: "TRIM", Registro: &r.INC3, Posicion: 0x10, Mapping: Booleano(0x10)}
+
+// Alterna la deteccion de evento tap/double en la direccion -y
 var TDOM = c.Control{Name: "TDOM", Registro: &r.INC3, Posicion: 0x08, Mapping: Booleano(0x08)}
+
+// Alterna la deteccion de evento tap/double en la direccion +y
 var TUPM = c.Control{Name: "TUPM", Registro: &r.INC3, Posicion: 0x04, Mapping: Booleano(0x04)}
+
+// Alterna la deteccion de evento tap/double en la direccion -z
 var TFDM = c.Control{Name: "TFDM", Registro: &r.INC3, Posicion: 0x02, Mapping: Booleano(0x02)}
+
+// Alterna la deteccion de evento tap/double en la direccion +z
 var TFUM = c.Control{Name: "TFUM", Registro: &r.INC3, Posicion: 0x01, Mapping: Booleano(0x01)}
 
+// Alterna la deteccion del evento bufer lleno en el PIN INT1
 var BFI1 = c.Control{Name: "BFI1", Registro: &r.INC4, Posicion: 0x40, Mapping: Booleano(0x40)}
+
+// Alterna la deteccion del evento Watermark en el PIN INT1
 var WMI1 = c.Control{Name: "WMI1", Registro: &r.INC4, Posicion: 0x20, Mapping: Booleano(0x20)}
+
+// Alterna la deteccion del evento datos de salida nuevos en el PIN INT1
 var DRDYI1 = c.Control{Name: "DRDYI1", Registro: &r.INC4, Posicion: 0x10, Mapping: Booleano(0x10)}
+
+// Alterna la deteccion del evento Tap/Double en el PIN INT1
 var TDTI1 = c.Control{Name: "TDTI1", Registro: &r.INC4, Posicion: 0x04, Mapping: Booleano(0x04)}
+
+// Alterna la deteccion del evento Motion Detect en el PIN INT1
 var WUFI1 = c.Control{Name: "WUFI1", Registro: &r.INC4, Posicion: 0x02, Mapping: Booleano(0x02)}
+
+// Alterna la deteccion del evento posicion de la orientacion  en el PIN INT1
 var TPI1 = c.Control{Name: "TPI1", Registro: &r.INC4, Posicion: 0x01, Mapping: Booleano(0x01)}
 
+// Alterna la activacion de pin fisico para la interrupcion por INT2.
 var IEN2 = c.Control{Name: "IEN2", Registro: &r.INC5, Posicion: 0x20, Mapping: Booleano(0x20)}
+
+// Alterna la poralidad de estado activo e inactivo en INT2.
 var IEA2 = c.Control{Name: "IEA2", Registro: &r.INC5, Posicion: 0x10, Mapping: Booleano(0x10)}
+
+// Alterna modo de repuesta para la interupcion en INT2.
 var IEL2 = c.Control{Name: "IEL2", Registro: &r.INC5, Posicion: 0x08, Mapping: Booleano(0x08)}
 
+// Alterna la deteccion del evento bufer lleno en el PIN INT2.
 var BFI2 = c.Control{Name: "BFI2", Registro: &r.INC6, Posicion: 0x40, Mapping: Booleano(0x40)}
+
+// Alterna la deteccion del evento Watermark en el PIN INT2.
 var WMI2 = c.Control{Name: "WMI2", Registro: &r.INC6, Posicion: 0x20, Mapping: Booleano(0x20)}
+
+// Alterna la deteccion del evento datos de salida nuevos en el PIN INT2.
 var DRDYI2 = c.Control{Name: "DRDYI2", Registro: &r.INC6, Posicion: 0x10, Mapping: Booleano(0x10)}
+
+// Alterna la deteccion del evento Tap/Double en el PIN INT2.
 var TDTI2 = c.Control{Name: "TDTI2", Registro: &r.INC6, Posicion: 0x04, Mapping: Booleano(0x04)}
+
+// Alterna la deteccion del evento Motion Detect en el PIN INT2.
 var WUFI2 = c.Control{Name: "WUFI2", Registro: &r.INC6, Posicion: 0x02, Mapping: Booleano(0x02)}
+
+// Alterna la deteccion del evento posicion de la orientacion  en el PIN INT2.
 var TPI2 = c.Control{Name: "TPI2", Registro: &r.INC6, Posicion: 0x01, Mapping: Booleano(0x01)}
 
-// Valor de contador minimo para  la deteccion de la oreintacion de acelerometro.
+// Valor de contador minimo para  la deteccion de la orientacion de acelerometro.
 var TSC = c.Control{Name: "TSC", Registro: &r.TILT_TIMER, Posicion: 0xFF, Mapping: nil}
 
 // Valor del contador minimo para la activacion de la deteccion de movimiento.
 var WUFC = c.Control{Name: "WUFC", Registro: &r.WUFC, Posicion: 0xFF, Mapping: nil}
 
 // Valor de umbral minimo para la activacion de la deteccion de movimiento.
-var ATH = c.Control{Name: "ATH", Registro: &r.ATH, Posicion: 0xFF, Mapping: nil}
+var ATH = c.Control{Name: "ATH", Registro: &r.ATH, Posicion: 0xFF, Mapping: nil, Conversor: float32(1.0 / 16.0), Str: " G"}
 
 // Valor del promedio de los datos de salida.
 var AVC = c.Control{Name: "AVC", Registro: &r.LP_CNTL, Posicion: 0x70, Mapping: AVC_C, Str: " Samples"}
@@ -170,6 +208,7 @@ var BUF_READ = c.Control{Name: "BUF_READ", Registro: &r.BUF_READ, Posicion: 0xFF
 var Mregister = map[*x.Register][]*c.Control{
 	&r.CNTL1:     {&PC1, &RES, &DRDYE, &GSEL, &WUFE, &TPE},
 	&r.CNTL3:     {&OWUF},
+	&r.ODCNTL:    {&OSA},
 	&r.INC1:      {&IEN, &IEA, &IEL, &STPOL, &SPI3E},
 	&r.INC2:      {&XNWUE, &XPWUE, &YNWUE, &YPWUE, &ZNWUE, &ZPWUE},
 	&r.INC3:      {&TLEM, &TRIM, &TDOM, &TUPM, &TFDM, &TFUM},

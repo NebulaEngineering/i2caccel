@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	c "goi2caccel/control"
-	m "goi2caccel/control/kx023"
+	c0 "goi2caccel/control/kx023"
 	d "goi2caccel/device"
 	r "goi2caccel/register"
 )
@@ -17,9 +17,12 @@ func General(format string, reg r.Register, data []*c.Control) {
 }
 
 func General1() {
-	for j, i := range m.Mregister {
-		fmt.Printf("datos de %v (0x%02X): %v\n", j.Name, j.Read_Error()[0], i[0])
-
+	for j, i := range c0.Mregister {
+		fmt.Printf("datos de %v (0x%02X): ", j.Name, j.Read_Error()[0])
+		for _, k := range i {
+			fmt.Print(k)
+		}
+		fmt.Println()
 	}
 
 	// fmt.Printf("datos de %v", reg.Read_Error())
@@ -29,14 +32,13 @@ func General1() {
 	// fmt.Println("")
 }
 
-func Previo() {
-
-}
-
 func main() {
 
-	d.LT8640A.Init()
-	defer d.LT8640A.Close()
+	d.KX023.Init()
+	defer d.KX023.Close()
+
+	c0.PC1.Previo(c0.PC1.Posicion + 1)
+	//fmt.Println(&m.PC1)
 
 	General1()
 
