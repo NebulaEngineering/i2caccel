@@ -1,4 +1,4 @@
-module cli_acc/main
+module goi2caccel
 
 go 1.23.3
 

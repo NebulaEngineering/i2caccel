@@ -8,8 +8,8 @@
 package control
 
 import (
-	r "cli_acc/main/register"
 	"fmt"
+	r "goi2caccel/register"
 )
 
 // Control representa un propiedad configurable del acelerómetro LT8640A.
@@ -24,6 +24,7 @@ type Control struct {
 	Str      string
 }
 
+// intepretacion de los datos en una propiedad de acelerometro.
 func (C *Control) String() string {
 	var Value byte
 	if C.Registro.Update {
@@ -35,6 +36,7 @@ func (C *Control) String() string {
 	}
 }
 
+// modificar el registro, de forma previa a la actualizacion.
 func (C *Control) Previo(n byte) {
 	C.Registro.Value = n
 	C.Registro.Update = true

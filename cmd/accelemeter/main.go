@@ -1,10 +1,11 @@
 package main
 
 import (
-	c "cli_acc/main/control"
-	d "cli_acc/main/device"
-	r "cli_acc/main/register"
 	"fmt"
+	c "goi2caccel/control"
+	m "goi2caccel/control/kx023"
+	d "goi2caccel/device"
+	r "goi2caccel/register"
 )
 
 func General(format string, reg r.Register, data []*c.Control) {
@@ -16,8 +17,8 @@ func General(format string, reg r.Register, data []*c.Control) {
 }
 
 func General1() {
-	for j, i := range c.Mregister {
-		fmt.Printf("datos de %v (0x%02X): %v\n", j.Name, j.Read_Error()[0], i)
+	for j, i := range m.Mregister {
+		fmt.Printf("datos de %v (0x%02X): %v\n", j.Name, j.Read_Error()[0], i[0])
 
 	}
 
