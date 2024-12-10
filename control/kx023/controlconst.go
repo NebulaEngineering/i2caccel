@@ -1,10 +1,12 @@
 package control
 
+import c "goi2caccel/control"
+
 // Booleano genera un mapa para valores booleanos, donde la clave 'hex' representa el bit
 // activado y 0x00 el bit desactivado, simplificando la interpretación de registros
 // con valores booleanos.
-func Booleano(hex byte) map[byte]any {
-	return map[byte]any{hex: 1, 0x00: 0}
+func Booleano(hex byte) map[byte]c.MappableValue {
+	return map[byte]c.MappableValue{hex: c.ByteValue(1), 0x00: c.ByteValue(0)}
 }
 
 // Constantes que representan los diferentes rangos de sensibilidad del acelerómetro.
@@ -15,10 +17,10 @@ const (
 )
 
 // GSEL_C mapea los valores de los registros a los rangos de sensibilidad en g.
-var GSEL_C = map[byte]any{
-	Gsel_sens_2g: 2,
-	Gsel_sens_4g: 4,
-	Gsel_sens_8g: 8,
+var GSEL_C = map[byte]c.MappableValue{
+	Gsel_sens_2g: c.ByteValue(2),
+	Gsel_sens_4g: c.ByteValue(4),
+	Gsel_sens_8g: c.ByteValue(8),
 }
 
 // Constantes que representan las diferentes frecuencias de Motion Detect.
@@ -34,15 +36,15 @@ const (
 )
 
 // Mapea los valores de los registros a las frecuencias de Motion Detect.
-var OWUF_C = map[byte]any{
-	OWUF_0_781HZ: 0.781,
-	OWUF_1_563HZ: 1.563,
-	OWUF_3_125HZ: 3.125,
-	OWUF_6_25HZ:  6.25,
-	OWUF_12_5HZ:  12.5,
-	OWUF_25HZ:    25,
-	OWUF_50HZ:    50,
-	OWUF_100HZ:   100,
+var OWUF_C = map[byte]c.MappableValue{
+	OWUF_0_781HZ: c.Float32Value(0.781),
+	OWUF_1_563HZ: c.Float32Value(1.563),
+	OWUF_3_125HZ: c.Float32Value(3.125),
+	OWUF_6_25HZ:  c.Float32Value(6.25),
+	OWUF_12_5HZ:  c.Float32Value(12.5),
+	OWUF_25HZ:    c.Float32Value(25),
+	OWUF_50HZ:    c.Float32Value(50),
+	OWUF_100HZ:   c.Float32Value(100),
 }
 
 // Constantes que representan las diferentes tasas de muestreo de salida.
@@ -63,19 +65,19 @@ const (
 )
 
 // Mapea los valores de los registros a las tasas de muestreo de salida.
-var OSA_C = map[byte]any{
-	OSA_12_5HZ:  12.5,
-	OSA_25HZ:    25,
-	OSA_50HZ:    50,
-	OSA_100HZ:   100,
-	OSA_200HZ:   200,
-	OSA_400HZ:   400,
-	OSA_800HZ:   800,
-	OSA_1600HZ:  1600,
-	OSA_0_781HZ: 0.781,
-	OSA_1_563HZ: 1.563,
-	OSA_3_125HZ: 3.125,
-	OSA_6_25HZ:  6.25,
+var OSA_C = map[byte]c.MappableValue{
+	OSA_12_5HZ:  c.Float32Value(12.5),
+	OSA_25HZ:    c.Float32Value(25),
+	OSA_50HZ:    c.Float32Value(50),
+	OSA_100HZ:   c.Float32Value(100),
+	OSA_200HZ:   c.Float32Value(200),
+	OSA_400HZ:   c.Float32Value(400),
+	OSA_800HZ:   c.Float32Value(800),
+	OSA_1600HZ:  c.Float32Value(1600),
+	OSA_0_781HZ: c.Float32Value(0.781),
+	OSA_1_563HZ: c.Float32Value(1.563),
+	OSA_3_125HZ: c.Float32Value(3.125),
+	OSA_6_25HZ:  c.Float32Value(6.25),
 }
 
 // Constantes que representan el control de muestras promediado.
@@ -91,15 +93,15 @@ const (
 )
 
 // Mapea los valores de los registros para el control de muestras promediado.
-var AVC_C = map[byte]any{
-	AVC_0_samples:   0,
-	AVC_2_samples:   2,
-	AVC_4_samples:   4,
-	AVC_8_samples:   8,
-	AVC_16_samples:  16,
-	AVC_32_samples:  32,
-	AVC_64_samples:  64,
-	AVC_128_samples: 128,
+var AVC_C = map[byte]c.MappableValue{
+	AVC_0_samples:   c.ByteValue(0),
+	AVC_2_samples:   c.ByteValue(2),
+	AVC_4_samples:   c.ByteValue(4),
+	AVC_8_samples:   c.ByteValue(8),
+	AVC_16_samples:  c.ByteValue(16),
+	AVC_32_samples:  c.ByteValue(32),
+	AVC_64_samples:  c.ByteValue(64),
+	AVC_128_samples: c.ByteValue(128),
 }
 
 // Constantes que representan los diferentes modo de operacion del buffer.
@@ -111,9 +113,9 @@ const (
 )
 
 // BUF_M_C mapea los modo de operacion del buffer.
-var BUF_M_C = map[byte]any{
-	BUF_M_FIFO:    "FIFO",
-	BUF_M_Stream:  "Stream",
-	BUF_M_Trigger: "Trigger",
-	BUF_M_FILO:    "FILO",
+var BUF_M_C = map[byte]c.MappableValue{
+	BUF_M_FIFO:    c.StringValue("FIFO"),
+	BUF_M_Stream:  c.StringValue("Stream"),
+	BUF_M_Trigger: c.StringValue("Trigger"),
+	BUF_M_FILO:    c.StringValue("FILO"),
 }

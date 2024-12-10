@@ -172,7 +172,7 @@ var TSC = c.Control{Name: "TSC", Registro: &r.TILT_TIMER, Posicion: 0xFF, Mappin
 var WUFC = c.Control{Name: "WUFC", Registro: &r.WUFC, Posicion: 0xFF, Mapping: nil}
 
 // Valor de umbral minimo para la activacion de la deteccion de movimiento.
-var ATH = c.Control{Name: "ATH", Registro: &r.ATH, Posicion: 0xFF, Mapping: nil, Conversor: float32(1.0 / 16.0), Str: " G"}
+var ATH = c.Control{Name: "ATH", Registro: &r.ATH, Posicion: 0xFF, Mapping: nil}
 
 // Valor del promedio de los datos de salida.
 var AVC = c.Control{Name: "AVC", Registro: &r.LP_CNTL, Posicion: 0x70, Mapping: AVC_C, Str: " Samples"}
@@ -203,6 +203,24 @@ var BUF_CLEAR = c.Control{Name: "BUF_CLEAR", Registro: &r.BUF_CLEAR, Posicion: 0
 
 // Leer una muestra del bufer, la ubicacion que toma los datos de buffer varia por el modo de operacion.
 var BUF_READ = c.Control{Name: "BUF_READ", Registro: &r.BUF_READ, Posicion: 0xFF, Mapping: nil}
+
+// slice que tenermina un orden especifico para mostrar los datos
+var Seq_Register = []*x.Register{
+	&r.INC1,
+	&r.INC2,
+	&r.INC3,
+	&r.INC4,
+	&r.INC5,
+	&r.INC6,
+	&r.ODCNTL,
+	&r.CNTL1,
+	&r.CNTL3,
+	&r.ATH,
+	&r.WUFC,
+	&r.LP_CNTL,
+	&r.BUF_CNTL1,
+	&r.BUF_CNTL2,
+}
 
 // Mapeado para la relacion entre los registro y sus propiedades especificas
 var Mregister = map[*x.Register][]*c.Control{
