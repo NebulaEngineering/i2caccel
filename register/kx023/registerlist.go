@@ -1,16 +1,23 @@
 package register
 
 import (
-	d "goi2caccel/device"
-	r "goi2caccel/register"
+	d "i2caccel/device"
+	r "i2caccel/register"
 )
 
-var XHP_L = r.Register{Name: "XHP_L", Addr: 0x00, Device: &d.KX023}
-var XHP_H = r.Register{Name: "XHP_H", Addr: 0x01, Device: &d.KX023}
-var YHP_L = r.Register{Name: "YHP_L", Addr: 0x02, Device: &d.KX023}
-var YHP_H = r.Register{Name: "YHP_H", Addr: 0x03, Device: &d.KX023}
-var ZHP_L = r.Register{Name: "ZHP_L", Addr: 0x04, Device: &d.KX023}
-var ZHP_H = r.Register{Name: "ZHP_H", Addr: 0x05, Device: &d.KX023}
+var XHPL = r.Register{Name: "XHPL", Addr: 0x00, Device: &d.KX023}
+var XHPH = r.Register{Name: "XHPH", Addr: 0x01, Device: &d.KX023}
+var YHPL = r.Register{Name: "YHPL", Addr: 0x02, Device: &d.KX023}
+var YHPH = r.Register{Name: "YHPH", Addr: 0x03, Device: &d.KX023}
+var ZHPL = r.Register{Name: "ZHPL", Addr: 0x04, Device: &d.KX023}
+var ZHPH = r.Register{Name: "ZHPH", Addr: 0x05, Device: &d.KX023}
+
+var XOUTL = r.Register{Name: "XOUTL", Addr: 0x06, Device: &d.KX023}
+var XOUTH = r.Register{Name: "XOUTH", Addr: 0x07, Device: &d.KX023}
+var YOUTL = r.Register{Name: "YOUTL", Addr: 0x08, Device: &d.KX023}
+var YOUTH = r.Register{Name: "YOUTH", Addr: 0x09, Device: &d.KX023}
+var ZOUTL = r.Register{Name: "ZOUTL", Addr: 0x0A, Device: &d.KX023}
+var ZOUTH = r.Register{Name: "ZOUTH", Addr: 0x0B, Device: &d.KX023}
 
 var INT_REL = r.Register{Name: "INT_REL", Addr: 0x17, Device: &d.KX023}
 var CNTL1 = r.Register{Name: "CNTL1", Addr: 0x18, Device: &d.KX023}

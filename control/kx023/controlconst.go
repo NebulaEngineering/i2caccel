@@ -1,6 +1,6 @@
 package control
 
-import c "goi2caccel/control"
+import c "i2caccel/control"
 
 // Booleano genera un mapa para valores booleanos, donde la clave 'hex' representa el bit
 // activado y 0x00 el bit desactivado, simplificando la interpretación de registros

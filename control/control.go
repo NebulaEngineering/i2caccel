@@ -9,7 +9,7 @@ package control
 
 import (
 	"fmt"
-	r "goi2caccel/register"
+	r "i2caccel/register"
 )
 
 // MappableValue es una interfaz para los tipos de datos que pueden ser mapeados a

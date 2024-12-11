@@ -1,18 +1,21 @@
 package control
 
 import (
-	c "goi2caccel/control"
-	r0 "goi2caccel/register/kx023"
+	c "i2caccel/control"
+	r0 "i2caccel/register/kx023"
 )
 
 // configuracion por defecto para un proposito especifico.
 func Config() {
+	// apagar sensor
+	PC1.Previo(c.ByteValue(0))
+	r0.CNTL1.Actualizar()
 
 	//INC1
 	for i, j := range []c.ByteValue{
 		1, //IEN
-		0, //IEA
-		1, //IEL
+		1, //IEA
+		0, //IEL
 		0, //STPOL
 		0, //SPI3E
 	} {
@@ -45,8 +48,8 @@ func Config() {
 
 	//INC4
 	for i, j := range []c.ByteValue{
-		1, //WMI1
 		0, //BFI1
+		0, //WMI1
 		1, //DRDYI1
 		0, //TDTI1
 		0, //WUFI1
@@ -58,7 +61,7 @@ func Config() {
 	//INC5
 	for i, j := range []c.ByteValue{
 		0, //IEN2
-		1, //IEA2
+		0, //IEA2
 		0, //IEL2
 	} {
 		Mregister[&r0.INC5][i].Previo(j)
@@ -68,7 +71,7 @@ func Config() {
 	for i, j := range []c.ByteValue{
 		1, //BFI2
 		0, //WMI2
-		1, //DRDYI2
+		0, //DRDYI2
 		0, //TDTI2
 		0, //WUFI2
 		0, //TPI2
@@ -77,8 +80,10 @@ func Config() {
 	}
 
 	//ODCTNL
-	for i, j := range []c.Float32Value{
-		100, //OSA (11 variantes)
+	for i, j := range []c.MappableValue{
+		c.ByteValue(0),       //IIR_BYPASS
+		c.ByteValue(0),       //LPR0
+		c.Float32Value(6.25), //OSA (11 variantes)
 	} {
 		Mregister[&r0.ODCNTL][i].Previo(j)
 	}
@@ -86,25 +91,25 @@ func Config() {
 	//CNTL1
 	for i, j := range []c.ByteValue{
 		1, //PC1
-		0, //RES
+		1, //RES
 		1, //DRDY
-		4, //GSEL (3 variantes)
-		1, //WUFE
+		2, //GSEL (3 variantes)
+		0, //WUFE
 		0, //TPE
 	} {
 		Mregister[&r0.CNTL1][i].Previo(j)
 	}
 
-	//CNTL1
+	//CNTL3
 	for i, j := range []c.Float32Value{
-		12.5, //OWUF (5 variantes)
+		6.25, //OWUF (5 variantes)
 	} {
 		Mregister[&r0.CNTL3][i].Previo(j)
 	}
 
 	//ATH
 	for i, j := range []c.ByteValue{
-		10, //ATH
+		8, //ATH
 	} {
 		Mregister[&r0.ATH][i].Previo(j)
 	}
@@ -118,7 +123,7 @@ func Config() {
 
 	//LP_CNTL
 	for i, j := range []c.ByteValue{
-		8, //LP_CNTL (8 variantes)
+		16, //LP_CNTL (8 variantes)
 	} {
 		Mregister[&r0.LP_CNTL][i].Previo(j)
 	}
@@ -130,14 +135,26 @@ func Config() {
 		Mregister[&r0.BUF_CNTL1][i].Previo(j)
 	}
 
-	//BUF_CNTL1
+	//BUF_CNTL2
 	for i, j := range []c.MappableValue{
-		c.ByteValue(1),        //BUFE
+		c.ByteValue(0),        //BUFE
 		c.ByteValue(0),        //BRES
-		c.ByteValue(1),        //BFIE
-		c.StringValue("FILO"), //BUF_M (4 variantes)
+		c.ByteValue(0),        //BFIE
+		c.StringValue("FIFO"), //BUF_M (4 variantes)
 	} {
 		Mregister[&r0.BUF_CNTL2][i].Previo(j)
 	}
+
+	// actualizar todo
+	for _, i := range Seq_Register {
+		i.Actualizar()
+		for _, j := range Mregister[i] {
+			j.Update = false
+		}
+	}
+
+	// encender sensor
+	PC1.Previo(c.ByteValue(1))
+	r0.CNTL1.Actualizar()
 
 }

@@ -1,4 +1,4 @@
-module goi2caccel
+module i2caccel
 
 go 1.23.3
 

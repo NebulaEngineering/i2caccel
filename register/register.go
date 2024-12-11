@@ -4,7 +4,7 @@
 package register
 
 import (
-	D "goi2caccel/device" // Importa el paquete "device" para interactuar con el dispositivo I2C.
+	D "i2caccel/device" // Importa el paquete "device" para interactuar con el dispositivo I2C.
 )
 
 // Register representa un registro de un dispositivo I2C, facilitando la interacción con un registro
@@ -63,7 +63,7 @@ func (r *Register) Read() ([]byte, error) {
 // cambios realizados en el valor del registro se reflejen en el dispositivo físico.
 func (r *Register) Actualizar() {
 	if r.Update {
-		r.Device.Write_Error([]byte{r.Value}) // Escribe el valor en el dispositivo.
-		r.Update = false                      // Marca el registro como no actualizado.
+		r.Write_Error([]byte{r.Value}) // Escribe el valor en el dispositivo.
+		r.Update = false               // Marca el registro como no actualizado
 	}
 }

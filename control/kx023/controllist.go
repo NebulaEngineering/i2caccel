@@ -1,10 +1,28 @@
 package control
 
 import (
-	c "goi2caccel/control"
-	x "goi2caccel/register"
-	r "goi2caccel/register/kx023"
+	c "i2caccel/control"
+	x "i2caccel/register"
+	r "i2caccel/register/kx023"
 )
+
+// Reporta si la interrupcion lo origino el evento buffer lleno.
+var BFI = c.Control{Name: "BFI", Registro: &r.INS2, Posicion: 0x40, Mapping: Booleano(0x40)}
+
+// Reporta el Watermark del buffer.
+var WMI = c.Control{Name: "WMI", Registro: &r.INS2, Posicion: 0x20, Mapping: Booleano(0x20)}
+
+// Reporta nuevo datos disponibles.
+var DRDY = c.Control{Name: "DRDY", Registro: &r.INS2, Posicion: 0x10, Mapping: Booleano(0x10)}
+
+// Reporta los eventos de tap/double tap.
+var TDTS = c.Control{Name: "TDTS", Registro: &r.INS2, Posicion: 0x0C, Mapping: Booleano(0x0C)}
+
+// Reporta los eventos de deteccion de movimiento.
+var WUFS = c.Control{Name: "WUFS", Registro: &r.INS2, Posicion: 0x02, Mapping: Booleano(0x02)}
+
+// Reporta los eventos de deteccion de movimiento.
+var TPS = c.Control{Name: "TPS", Registro: &r.INS2, Posicion: 0x01, Mapping: Booleano(0x01)}
 
 // Alterna entre modo sleep y run de acelerometro.
 var PC1 = c.Control{Name: "PC1", Registro: &r.CNTL1, Posicion: 0x80, Mapping: Booleano(0x80)}
@@ -226,7 +244,7 @@ var Seq_Register = []*x.Register{
 var Mregister = map[*x.Register][]*c.Control{
 	&r.CNTL1:     {&PC1, &RES, &DRDYE, &GSEL, &WUFE, &TPE},
 	&r.CNTL3:     {&OWUF},
-	&r.ODCNTL:    {&OSA},
+	&r.ODCNTL:    {&IIR_BYPASS, &LPR0, &OSA},
 	&r.INC1:      {&IEN, &IEA, &IEL, &STPOL, &SPI3E},
 	&r.INC2:      {&XNWUE, &XPWUE, &YNWUE, &YPWUE, &ZNWUE, &ZPWUE},
 	&r.INC3:      {&TLEM, &TRIM, &TDOM, &TUPM, &TFDM, &TFUM},
