@@ -4,9 +4,12 @@
 package device
 
 import (
+	"fmt"
 	"log"
 	"sync"
 
+	"periph.io/x/conn/v3/gpio"
+	"periph.io/x/conn/v3/gpio/gpioreg"
 	"periph.io/x/conn/v3/i2c"
 	"periph.io/x/conn/v3/i2c/i2creg"
 	"periph.io/x/host/v3"
@@ -15,12 +18,14 @@ import (
 // Device representa un dispositivo I2C. Contiene la información necesaria para
 // interactuar con un dispositivo a través del bus I2C.
 type Device struct {
-	name  string        // Nombre del dispositivo I2C.
-	adrr  uint16        // Dirección I2C del dispositivo.
-	bus   string        // Nombre del bus I2C al que se conecta (ej: "1", "2").
-	iobus i2c.BusCloser // Instancia del bus I2C.
-	dev   *i2c.Dev      // Representación del dispositivo I2C en el bus.
-	mux   sync.Mutex    // Mutex para asegurar acceso exclusivo al dispositivo.
+	name    string        // Nombre del dispositivo I2C.
+	adrr    uint16        // Dirección I2C del dispositivo.
+	bus     string        // Nombre del bus I2C al que se conecta (ej: "1", "2").
+	iobus   i2c.BusCloser // Instancia del bus I2C.
+	devi2c  *i2c.Dev      // Representación del dispositivo I2C en el bus.
+	gpio    []string
+	devgpio []gpio.PinIO
+	mux     sync.Mutex // Mutex para asegurar acceso exclusivo al dispositivo.
 }
 
 // Init inicializa el dispositivo I2C.  Configura la conexión con el bus I2C
@@ -31,6 +36,18 @@ func (d *Device) Init() {
 		log.Fatalf("Error al inicializar el host: %v", err)
 	}
 
+	// Inicializa cada GPIO especificado.
+	for _, pinName := range d.gpio {
+		pin := gpioreg.ByName(pinName)
+		if pin == nil {
+			log.Fatalf("Error: No se encontró el GPIO %s", pinName)
+		}
+		if err := pin.In(gpio.PullNoChange, gpio.RisingEdge); err != nil {
+			log.Fatalf("Error al configurar el GPIO %s: %v", pinName, err)
+		}
+		d.devgpio = append(d.devgpio, pin)
+	}
+
 	// Abre el bus I2C especificado por el nombre.
 	iobus, err := i2creg.Open(d.bus)
 	if err != nil {
@@ -39,7 +56,7 @@ func (d *Device) Init() {
 	d.iobus = iobus // Guarda el bus para poder cerrarlo posteriormente.
 
 	// Crea una instancia del dispositivo I2C con la dirección y el bus.
-	d.dev = &i2c.Dev{Addr: d.adrr, Bus: iobus}
+	d.devi2c = &i2c.Dev{Addr: d.adrr, Bus: iobus}
 }
 
 // Close cierra la conexión con el bus I2C liberando los recursos.
@@ -54,7 +71,7 @@ func (d *Device) Write(w []byte) error {
 	d.mux.Lock()         // Bloquea el mutex para evitar acceso concurrente.
 	defer d.mux.Unlock() // Libera el mutex al finalizar la función.
 
-	if _, err := d.dev.Write(w); err != nil {
+	if _, err := d.devi2c.Write(w); err != nil {
 		return err // Retorna el error si la escritura falla.
 	}
 	return nil // Retorna nil si la escritura es exitosa.
@@ -77,7 +94,7 @@ func (d *Device) Read(w []byte) ([]byte, error) {
 	defer d.mux.Unlock() // Libera el mutex al finalizar la función.
 
 	read := make([]byte, 1) // Crea un buffer para almacenar los datos leídos (1 byte).
-	if err := d.dev.Tx(w, read); err != nil {
+	if err := d.devi2c.Tx(w, read); err != nil {
 		return nil, err // Retorna nil y el error si la lectura/transacción falla.
 	}
 	return read, nil // Retorna los datos leídos y nil si la lectura es exitosa.
@@ -93,4 +110,26 @@ func (d *Device) Read_Error(w []byte) []byte {
 		return nil // Retorna nil si ocurre un error (aunque la función termina por log.Fatalf).
 	}
 	return read // Retorna los datos leídos si la lectura es exitosa.
+}
+
+func (d *Device) ReadGPIO(index int) (bool, error) {
+	d.mux.Lock()         // Bloquea el mutex para evitar acceso concurrente.
+	defer d.mux.Unlock() // Libera el mutex al finalizar la función.
+	if index < 0 || index >= len(d.devgpio) {
+		return false, fmt.Errorf("índice de GPIO %d fuera de rango", index)
+	}
+	pin := d.devgpio[index]
+	if pin == nil {
+		return false, fmt.Errorf("GPIO en el índice %d no está inicializado", index)
+	}
+	return pin.Read() == gpio.High, nil
+}
+
+func (d *Device) ReadGPIO_Error(index int) bool {
+	read, err := d.ReadGPIO(index)
+	if err != nil {
+		log.Fatalf("Error al configurar el GPIO%d como entrada: %v", index, err)
+		return false
+	}
+	return read
 }

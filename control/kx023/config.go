@@ -81,9 +81,9 @@ func Config() {
 
 	//ODCTNL
 	for i, j := range []c.MappableValue{
-		c.ByteValue(0),       //IIR_BYPASS
-		c.ByteValue(0),       //LPR0
-		c.Float32Value(6.25), //OSA (11 variantes)
+		c.ByteValue(0),        //IIR_BYPASS
+		c.ByteValue(0),        //LPR0
+		c.Float32Value(0.781), //OSA (11 variantes) ()
 	} {
 		Mregister[&r0.ODCNTL][i].Previo(j)
 	}
@@ -102,7 +102,7 @@ func Config() {
 
 	//CNTL3
 	for i, j := range []c.Float32Value{
-		6.25, //OWUF (5 variantes)
+		0.781, //OWUF (5 variantes)
 	} {
 		Mregister[&r0.CNTL3][i].Previo(j)
 	}
