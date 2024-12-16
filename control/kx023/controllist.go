@@ -78,7 +78,7 @@ var OTDT = c.Control{Name: "OTDT", Registro: &r.CNTL3, Posicion: 0x38}
 // Alterna la frecuencia de salida de datos general de la deccion  de movimiento y salida con filtro pasa alta.
 var OWUF = c.Control{Name: "OWUF", Registro: &r.CNTL3, Posicion: 0x07, Mapping: OWUF_C, Str: " Hz"}
 
-// Alternar la activacion de filtro pasa baja de la salida normal.
+// Alternar la desactivacion de filtro pasa baja de la salida normal.
 var IIR_BYPASS = c.Control{Name: "IIR_BYPASS", Registro: &r.ODCNTL, Posicion: 0x80, Mapping: Booleano(0x80)}
 
 // Alternar el valor de la frecuencia de contre del fitro pasa baja.
