@@ -6,7 +6,7 @@ import (
 )
 
 // configuracion por defecto para un proposito especifico.
-func Config() {
+func Config(flagLPRO *int, flagIIR_BYPASS *int, flagOSA *float64, flagOWUF *float64, flagAVC *int) {
 	// apagar sensor
 	PC1.Previo(c.ByteValue(0))
 	r0.CNTL1.Actualizar()
@@ -81,9 +81,9 @@ func Config() {
 
 	//ODCTNL
 	for i, j := range []c.MappableValue{
-		c.ByteValue(0),       //IIR_BYPASS
-		c.ByteValue(0),       //LPR0
-		c.Float32Value(6.25), //OSA (11 variantes) (0.781|1.563|3.125|6.25|12.5|25|50|100|200|400|800|1600)
+		c.ByteValue(*flagIIR_BYPASS), //IIR_BYPASS
+		c.ByteValue(*flagLPRO),       //LPR0
+		c.Float32Value(*flagOSA),     //OSA (11 variantes) (0.781|1.563|3.125|6.25|12.5|25|50|100|200|400|800|1600)
 	} {
 		Mregister[&r0.ODCNTL][i].Previo(j)
 	}
@@ -102,7 +102,7 @@ func Config() {
 
 	//CNTL3
 	for i, j := range []c.Float32Value{
-		0.781, //OWUF (5 variantes)
+		c.Float32Value(*flagOWUF), //OWUF (5 variantes)
 	} {
 		Mregister[&r0.CNTL3][i].Previo(j)
 	}
@@ -123,7 +123,7 @@ func Config() {
 
 	//LP_CNTL
 	for i, j := range []c.ByteValue{
-		16, //LP_CNTL (8 variantes)
+		c.ByteValue(*flagAVC), //LP_CNTL (8 variantes)
 	} {
 		Mregister[&r0.LP_CNTL][i].Previo(j)
 	}
